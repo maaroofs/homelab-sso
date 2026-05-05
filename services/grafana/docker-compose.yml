@@ -4,6 +4,10 @@ services:
     container_name: grafana
     ports:
       - "3000:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.localhost`)"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
     environment:
       GF_SERVER_ROOT_URL: "${GF_SERVER_ROOT_URL}"
       GF_AUTH_GENERIC_OAUTH_ENABLED: "true"

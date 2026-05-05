@@ -16,6 +16,10 @@ services:
     container_name: nextcloud
     ports:
       - "8081:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.localhost`)"
+      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
     environment:
       POSTGRES_HOST: nextcloud-db
       POSTGRES_DB: "${NC_POSTGRES_DB}"
