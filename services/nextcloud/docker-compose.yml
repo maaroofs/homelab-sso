@@ -1,0 +1,39 @@
+services:
+  nextcloud-db:
+    image: postgres:15
+    container_name: nextcloud-db
+    environment:
+      POSTGRES_DB: "${NC_POSTGRES_DB}"
+      POSTGRES_USER: "${NC_POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${NC_POSTGRES_PASSWORD}"
+    volumes:
+      - nextcloud-db-data:/var/lib/postgresql/data
+    networks:
+      - homelab
+
+  nextcloud:
+    image: nextcloud:27
+    container_name: nextcloud
+    ports:
+      - "8081:80"
+    environment:
+      POSTGRES_HOST: nextcloud-db
+      POSTGRES_DB: "${NC_POSTGRES_DB}"
+      POSTGRES_USER: "${NC_POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${NC_POSTGRES_PASSWORD}"
+      NEXTCLOUD_ADMIN_USER: "${NC_ADMIN_USER}"
+      NEXTCLOUD_ADMIN_PASSWORD: "${NC_ADMIN_PASSWORD}"
+    volumes:
+      - nextcloud-data:/var/www/html
+    depends_on:
+      - nextcloud-db
+    networks:
+      - homelab
+
+volumes:
+  nextcloud-db-data:
+  nextcloud-data:
+
+networks:
+  homelab:
+    external: true
