@@ -1,0 +1,21 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    ports:
+      - "8096:8096"
+    environment:
+      JELLYFIN_PublishedServerUrl: "${JELLYFIN_PublishedServerUrl}"
+    volumes:
+      - jellyfin-config:/config
+      - jellyfin-cache:/cache
+    networks:
+      - homelab
+
+volumes:
+  jellyfin-config:
+  jellyfin-cache:
+
+networks:
+  homelab:
+    external: true
