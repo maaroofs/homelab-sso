@@ -6,15 +6,13 @@ Built as a portfolio project demonstrating IAM, SSO, LDAP directory services, OA
 
 ## Architecture
 
-Browser → Traefik (reverse proxy)
-↓
-┌───────────────────────────────┐
-│  Grafana  Gitea  Nextcloud  Jellyfin
-└───────────┬───────────────────┘
-↓
-Keycloak (OIDC/OAuth2)
-↓
-OpenLDAP (users & groups)
+```
+Browser
+  → Traefik (reverse proxy)
+    → Grafana / Gitea / Nextcloud / Jellyfin
+      → Keycloak (OIDC/OAuth2)
+        → OpenLDAP (users & groups)
+```
 
 ## Stack
 
@@ -84,11 +82,13 @@ docker network connect homelab openldap
 
 Add these to your hosts file:
 
+```
 127.0.0.1 grafana.localhost
 127.0.0.1 gitea.localhost
 127.0.0.1 keycloak.localhost
 127.0.0.1 nextcloud.localhost
 127.0.0.1 jellyfin.localhost
+```
 
 ## License
 
